@@ -12,7 +12,8 @@ class Client {
 //    get long() { return (this.height <= this.width) ? ['width', this.width] : ['height', this.height] }
 //    get short() { return (this.height <= this.width) ? ['height', this.height] : ['width', this.width] }
     get long() { return (this.height <= this.width) ? {dir:'width', size:this.width} : {dir:'height', size:this.height} }
-    get short() { return (this.height <= this.width) ? {dir:'height', size:this.height} : {dir:'width', size:this.width* }
+    //get short() { return (this.height <= this.width) ? ({dir:'height', size:this.height}) : ({dir:'width', size:this.width}) }
+    get short() { return (this.height <= this.width) ? {dir:'height', size:this.height} : {dir:'width', size:this.width} }
     get isLandscape() { return 'width'===this.long.dir }
     get isPortrate() { return 'height'===this.long.dir }
 }
@@ -42,7 +43,12 @@ class AspectRatio {
 }
 class WritingMode {
     constructor(writingMode) {
-        this._writingMode = this.isHorizontal(writingMode)
+//        console.log(writingMode)
+//        console.log(((writingMode) ? writingMode : WritingMode.horizontalValue))
+        this.#setDefault(writingMode)
+//        this._writingMode = ((writingMode) ? writingMode : WritingMode.horizontalValue)
+//        this._writingMode = this.isHorizontal(((writingMode) ? writingMode : WritingMode.horizontalValue))
+//        console.log(this._writingMode)
     }
     get isVertical() { return this._writingMode.startsWith('vertical') }
     get isHorizontal() { return this._writingMode.startsWith('horizontal') }
@@ -54,6 +60,11 @@ class WritingMode {
     static get horizontalValue() { return 'horizontal-tb' }
     static Vertical() { return new WritingMode('vertical-rl') }
     static Horizontal() { return new WritingMode('horizontal-tb') }
+    #setDefault(v) {
+        if      (v===WritingMode.verticalValue)   { this._writingMode = v }
+        else if (v===WritingMode.horizontalValue) { this._writingMode = v }
+        else                                      { this._writingMode = WritingMode.horizontalValue }
+    }
 }
 class Layout {
     constructor(client, writingMode, hasMenu) {
@@ -62,14 +73,8 @@ class Layout {
         this._fontSize = new FontSize(((this._writingMode.isHorizontal) ? this._client.width : this._client.height))
         this.count = this.#count()
         this.menu = new Menu(this._fontSize, client)
-        this.ui = {
-            width: 0,
-            height: 0,
-        }
-        this.grid = {
-            columns: ,
-            rows: ,
-        }
+        this.ui = { width:0, height:0 }
+        this.grid = { columns:null, rows:null }
     }
     #count() { return ((18 < this._fontSize.size) ? 2 : 1) }
     #gridTemplate() {
@@ -125,7 +130,7 @@ class FontSize {
     }
     calc(inlineSize) {
 //        const minLineChars = inlineSize / 16
-        const minLineChars = this.calcLineOfCharMax(inlineSize)
+        const minLineChars = FontSize.calcLineOfCharMax(inlineSize)
         if (minLineChars <= 30) { return 16; } // Screen<=480px: 16px/1字 1〜30字/行
         else if (minLineChars <= 40) { return 18; } // Screen<=640px: 18px/1字 26.6〜35.5字/行
         else { return (inlineSize / 40); } // Screen<=640px: ?px/1字 40字/行
@@ -146,6 +151,7 @@ class FontFamily {
         Css.set('--font-family-suns-serif', `${this.sunsSerif}`)
     }
 }
+/*
 class AppStyle {
     constructor() {
         this.size = {
@@ -155,8 +161,8 @@ class AppStyle {
             block: van.state(document.documentElement.clientHeight),
             long: van.derive(()=>(this.height.val <= this.width.val) ? this.width.val : this.height.val),
             short: van.derive(()=>(this.height.val <= this.width.val) ? this.width.val : this.height.val),
-            isLandscape: ,
-            isPortrate: ,
+            isLandscape: 0,
+            isPortrate: 0,
         }
         this.menu = {
             size: {
@@ -227,4 +233,9 @@ class AppStyle {
     }
 }
 window.appStyle = new AppStyle()
+*/
+window.Layout = Layout
+window.Client = Client
+window.WritingMode = WritingMode
+window.FontFamily = FontFamily
 })()

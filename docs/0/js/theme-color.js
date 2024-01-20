@@ -1,10 +1,10 @@
 (function(){
-class Nigtht {
+class Night {
     static make() {
         const base   = chroma('#000') // #000 
         const main   = chroma('#0d0') // red,orange,green,yellow,white  isHighlight
         const accent = chroma('#dd0') // red,orange,green,yellow,white  isHighlight
-        return ThemeColor(base, main, accent)
+        return new ThemeColor(base, main, accent)
     }
 }
 class Noon {
@@ -12,10 +12,12 @@ class Noon {
         const base   = chroma(((isSoft) ? '#ddd' : '#fff'))
         const main   = chroma('#000')
         const accent = chroma(((isSoft) ? '#0d0' : '#0f0')) // red,orange,yellow,green,blue * isSoft
-        return ThemeColor(base, main, accent)
+        return new ThemeColor(base, main, accent)
     }
 }
 class ThemeColor {
+    static get Night() { return Night }
+    static get Noon() { return Noon }
     constructor(base, main, accent) {
         this._base = base
         this._main = main
@@ -34,5 +36,8 @@ class ThemeColor {
         return true
     }
 }
-window.themeColor = new ThemeColor()
+//window.themeColor = new ThemeColor()
+window.ThemeColor = ThemeColor
+//window.Night = ThemeColor
+//window.Noon = ThemeColor
 })()

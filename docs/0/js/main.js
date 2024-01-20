@@ -8,6 +8,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 //        p('Make basic CSS settings (responsive/color scheme)'),
     )
     van.add(document.querySelector('footer'),  new Footer('ytyaru', '../').make())
+    const baseStyle = new BaseStyle()
+    console.log(baseStyle)
 });
 window.addEventListener('beforeunload', (event) => {
     console.log('beforeunload!!');
