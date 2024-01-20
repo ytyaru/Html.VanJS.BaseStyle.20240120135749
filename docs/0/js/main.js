@@ -10,6 +10,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
     van.add(document.querySelector('footer'),  new Footer('ytyaru', '../').make())
     const baseStyle = new BaseStyle()
     console.log(baseStyle)
+    /*
+//    Css.set('background-color', baseStyle.color.base.hex(), document.body)
+//    Css.set('color', baseStyle.color.main.hex(), document.body)
+    Css.set('--background-color', baseStyle.color.base.hex())
+    Css.set('--color', baseStyle.color.main.hex())
+    Css.set('--em-color', baseStyle.color.main.hex())
+    Css.set('--a-color', baseStyle.color.accent.hex())
+    */
 });
 window.addEventListener('beforeunload', (event) => {
     console.log('beforeunload!!');

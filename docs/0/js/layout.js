@@ -105,7 +105,7 @@ class Layout {
         this.#fontSize()
         */
     }
-
+    style() { return `display:grid;grid-template-columns:${this.gridTemplateColumns.val};grid-template-rows:${this.gridTemplateRows.val};inline-size:${this.inlineSize.val};block-size:${this.blockSize.val};` }
 }
 class Menu {
     constructor(client, fontSize) {

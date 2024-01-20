@@ -22,10 +22,11 @@ class ThemeColor {
         this._base = base
         this._main = main
         this._accent = accent
+        this.#setColor()
     }
     get base( ) { return this._base }
-    get main( ) { return this._base }
-    get accent( ) { return this._base }
+    get main( ) { return this._main }
+    get accent( ) { return this._accent }
     set base(v) { this._base = v }
     set main(v) { this._main = v }
     set accent(v) { this._accent = v }
@@ -34,6 +35,22 @@ class ThemeColor {
         if (chroma.contrast(this.base, this.accent) < 4.5) { return false }
         if (chroma.contrast(this.main, this.accent) < 4.5) { return false }
         return true
+    }
+    #setColor() {
+        Css.set('--background-color', this.base.hex())
+        Css.set('--color', this.main.hex())
+        Css.set('--em-color', this.main.hex())
+        Css.set('--a-color', this.accent.hex())
+        Css.set('--selection-color', this.base.hex())
+        Css.set('--selection-background-color', this.main.hex())
+        Css.set('--a-selection-color', this.base.hex())
+        Css.set('--a-selection-background-color', this.accent.hex())
+        Css.set('--caret-color', this.main.hex())
+        Css.set('--outline-color', this.accent.hex())
+        Css.set('--th-color', this.main.hex())
+        Css.set('--th-background-color', chroma.mix(this.main, this.base, 0.75).hex())
+//        Css.set('--button-focus-color', )
+//        Css.set('--button-focus-background-color', )
     }
 }
 //window.themeColor = new ThemeColor()
