@@ -4,6 +4,9 @@ class Client {
         this.width = (w) ? w : document.documentElement.clientWidth
         this.height = (h) ? h : document.documentElement.clientHeight
         this.ratio = new AspectRatio(this.width, this.height)
+//        this.width = van.state(((w) ? w : document.documentElement.clientWidth))
+//        this.height = van.state(((h) ? h : document.documentElement.clientHeight))
+//        this.ratio = new AspectRatio(this.width.val, this.height.val)
     }
 //    get inline() { return this.width }
 //    get block() { return this.height }
@@ -21,6 +24,7 @@ class AspectRatio {
     constructor(w, h) {
         this.width = (w) ? w : document.documentElement.clientWidth
         this.height = (h) ? h : document.documentElement.clientHeight
+        this.gdc = van.derive()
     }
     get ratio() { // アスペクト比
         const gcd = this.#gcd(this.width, this.height)
@@ -71,26 +75,26 @@ class Layout {
         this._client = client
         this._writingMode = writingMode
         this._fontSize = new FontSize(((this._writingMode.isHorizontal) ? this._client.width : this._client.height))
-        this.count = this.#count()
-        this.menu = new Menu(this._fontSize, client)
-        this.ui = { width:0, height:0 }
-        this.grid = { columns:null, rows:null }
+        //this._count = this.#count()
+        this._count = van.derive(this.#count())
+        this._menu = new Menu(this._fontSize, client)
+        this._ui = { width:0, height:0 }
+        this._grid = { columns:null, rows:null }
     }
     #count() { return ((18 < this._fontSize.size) ? 2 : 1) }
     #gridTemplate() {
-        this.menuBlockSize.val = this.menu.size.block
-        this.ui.width.val = (this._client.isLandscape) ? ((this._client.width.val - this.menu.size.block.val) / 2) : this._client.width.val
-        this.ui.height.val = (this._client.isLandscape) ? this._client.height.val : ((this._client.height.val - this.menu.size.block.val) / 2)
-        const landscapeSizes = [`${this.ui.width.val}px ${this.menu.size.block.val}px ${this.ui.width.val}px`, `${this.ui.height.val}px`]
-        const portraitSizes = [`${this.ui.width.val}px`, `${this.ui.height.val}px ${this.menu.size.block.val}px ${this.ui.height.val}px`]
+        this._ui.width.val = (this._client.isLandscape) ? ((this._client.width.val - this._menu.size.block.val) / 2) : this._client.width.val
+        this._ui.height.val = (this._client.isLandscape) ? this._client.height.val : ((this._client.height.val - this._menu.size.block.val) / 2)
+        const landscapeSizes = [`${this._ui.width.val}px ${this._menu.size.block.val}px ${this._ui.width.val}px`, `${this._ui.height.val}px`]
+        const portraitSizes = [`${this._ui.width.val}px`, `${this._ui.height.val}px ${this._menu.size.block.val}px ${this._ui.height.val}px`]
         const sizes = (this._client.isLandscape) ? landscapeSizes : portraitSizes
 //        this.gridTemplateColumns.val = sizes[0]
 //        this.gridTemplateRows.val = sizes[1]
-        this.grid.columns.val = sizes[0]
-        this.grid.rows.val = sizes[1]
+        this._grid.columns.val = sizes[0]
+        this._grid.rows.val = sizes[1]
         this._fontSize.size = this._fontSize.calc(((this._writingMode.isVertical) ? this._client.height : this._client.width))
         this.men.fontSize.size = this._fontSize.size
-//        this.menu.isVertical = this.#isLandscape()
+//        this._menu.isVertical = this.#isLandscape()
 //        this.#fontSize()
         /*
 //        this.menuBlockSize.val = this.menu.blockSize * 1.5
@@ -105,7 +109,13 @@ class Layout {
         this.#fontSize()
         */
     }
-    style() { return `display:grid;grid-template-columns:${this.gridTemplateColumns.val};grid-template-rows:${this.gridTemplateRows.val};inline-size:${this.inlineSize.val};block-size:${this.blockSize.val};` }
+    #inlineSize() {
+
+    }
+    #blockSize() {
+
+    }
+    style() { return `display:grid;grid-template-columns:${this._grid.columns.val};grid-template-rows:${this._grid.rows.val};inline-size:${this.inlineSize.val};block-size:${this.blockSize.val};` }
 }
 class Menu {
     constructor(client, fontSize) {

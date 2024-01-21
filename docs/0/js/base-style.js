@@ -11,6 +11,7 @@ class BaseStyle {
     get layout() { return this._layout }
     get font() { return this._font }
     get color() { return this._color }
+    //get element() {return div({id:'javel-writer-min', style:appStyle.style.bind(appStyle)}, this._layout.panels.first, this._layout.panels.menu, this._layout.panels.last) }
 }
 window.BaseStyle = BaseStyle
 })()
