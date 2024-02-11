@@ -18,6 +18,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
         div(h1({style:`background-color:#d00;`},'first'), h2(a({href:`https://github.com/${author}/Html.VanJS.BaseStyle.20240120135749/`}, 'BaseStyle')), p('基本的なCSS設定をする（レスポンシブ・配色）')),
         div({style:`background-color:#0d0;`}, 'menu'),
         div({style:`background-color:#00d;`}, h1('last')),
+        p('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+        p('aaaaaaaaaaaaaaaa'),
+        p('aaaaaaaaaaaaaaaa'),
+        p('aaaaaaaaaaaaaaaa'),
+        p('aaaaaaaaaaaaaaaa'),
+        p('aaaaaaaaaaaaaaaa'),
+        p('aaaaaaaaaaaaaaaa'),
+        p('aaaaaaaaaaaaaaaa'),
+        p('aaaaaaaaaaaaaaaa'),
+        p('aaaaaaaaaaaaaaaa'),
+        p('aaaaaaaaaaaaaaaa'),
+        p('aaaaaaaaaaaaaaaa'),
     ))
     /*
 //    Css.set('background-color', baseStyle.color.base.hex(), document.body)

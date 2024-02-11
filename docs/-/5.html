@@ -1,0 +1,176 @@
+<script src="../lib/van/1.2.6/nomodule.min.js"></script>
+<script src="../lib/van-x/0.1.3/nomodule.min.js"></script>
+<script src="../lib/util/type.js"></script>
+<script src="../lib/util/css.js"></script>
+<script src="../lib/util/array/times.js"></script>
+<style>
+body {
+    padding:0;margin:0;
+    box-sizing:border-box;
+    /*
+    overflow-x:hidden;
+    overflow-y:hidden;
+    */
+}
+</style>
+<script>
+window.addEventListener('DOMContentLoaded', (event) => {
+    van.add(document.body, van.tags.div([van.tags.h1('見出し'), van.tags.p('本文。')]))
+    van.add(document.body, ()=>van.tags.div([van.tags.h1('見出し'), van.tags.p('本文。')]))
+
+    function test000() {
+        const htmls = [van.tags.h1('見出し000'), van.tags.p('本文。')]
+        van.add(document.body, htmls)
+        //htmls = [van.tags.p('ああああああ000')] // Error:Assignment to constant variable.
+    }
+    test000()
+    
+    function test00() {
+        const htmls = [van.tags.h1('見出し00'), van.tags.p('本文。')]
+        van.add(document.body, htmls)
+        htmls[0] = van.tags.p('ああああああ00')
+    }
+    test00()
+    
+    function test0() {
+        const htmls = [van.tags.h1('見出し0'), van.tags.p('本文。')]
+        van.add(document.body, van.tags.div(htmls))
+        htmls[0] = van.tags.p('ああああああ0')
+    }
+    test0()
+
+    function test1() {
+        const htmls = van.state([van.tags.h1('見出し1'), van.tags.p('本文。')])
+        van.add(document.body, ()=>htmls.val)
+        htmls.val[0] = van.tags.p('ああああああ1')
+    }
+    test1()
+
+    function test2() {
+        const htmls = van.state([van.tags.h1('見出し2'), van.tags.p('本文。')])
+        van.add(document.body, van.tags.div(()=>van.tags.div(htmls.val)))
+        htmls.val[0] = van.tags.p('ああああああ2')
+    }
+    test2()
+
+    function test3() {
+        const htmls = [van.tags.h1('見出し3'), van.tags.p('本文。')]
+        van.add(document.body, ()=>van.tags.div(htmls))
+        htmls.val = [van.tags.h1('書き換え！3')]
+    }
+    test3()
+    function test4() {
+        const htmls = van.state([van.tags.h1('見出し4'), van.tags.p('本文。')])
+        van.add(document.body, ()=>van.tags.div(htmls.val))
+        htmls.val = [van.tags.h1('書き換え！4')]
+    }
+    test4()
+    function test5() {
+        const htmls = van.state([van.tags.h1('見出し5'), van.tags.p('本文。')])
+        van.add(document.body, van.tags.div(()=>van.tags.div(htmls.val)))
+        htmls.val = [van.tags.h1('書き換え！5')]
+    }
+    test5()
+
+    function testX0() {
+        const htmls = vanX.reactive([van.tags.h1('見出しX0'), van.tags.p('本文。')])
+        van.add(document.body, ()=>van.tags.div(htmls.val))
+        htmls.val = [van.tags.h1('書き換え！X0')]
+    }
+    testX0()
+    function testX1() {
+        const htmls = vanX.reactive([van.tags.h1('見出しX1'), van.tags.p('本文。')])
+        van.add(document.body, van.tags.div(()=>van.tags.div(htmls.val)))
+        htmls.val = [van.tags.h1('書き換え！X1')]
+    }
+    testX1()
+    /*
+    function testX2() {
+        const htmls = vanX.reactive([van.tags.h1('見出しX2'), van.tags.p('本文。')])
+        van.add(document.body, ()=>van.tags.div(htmls))
+        htmls = [van.tags.h1('書き換え！X2')] // Assignment to constant variable.
+    }
+    testX2()
+    function testX3() {
+        const htmls = vanX.reactive([van.tags.h1('見出しX3'), van.tags.p('本文。')])
+        van.add(document.body, van.tags.div(()=>van.tags.div(htmls)))
+        htmls = [van.tags.h1('書き換え！X3')] // Assignment to constant variable.
+    }
+    testX3()
+    */
+    function testX4() {
+        const htmls = vanX.reactive([van.tags.h1('見出しX4'), van.tags.p('本文。')])
+        van.add(document.body, ()=>van.tags.div(vanX.stateFields(htmls).val))
+        vanX.stateFields(htmls).val = [van.tags.h1('書き換え！X4')]
+    }
+    testX4()
+    function testX5() {
+        const htmls = vanX.reactive([van.tags.h1('見出しX5'), van.tags.p('本文。')])
+        van.add(document.body, van.tags.div(()=>van.tags.div(vanX.stateFields(htmls).val)))
+        vanX.stateFields(htmls).val = [van.tags.h1('書き換え！X5')]
+    }
+    testX5()
+    function testX6() {
+        const htmls = vanX.reactive([van.tags.h1('見出しX6'), van.tags.p('本文。')])
+        van.add(document.body, ()=>van.tags.div(vanX.stateFields(htmls).val))
+        htmls[0] = [van.tags.h1('書き換え！X6')]
+    }
+    testX6()
+    function testX7() {
+        const htmls = vanX.reactive([van.tags.h1('見出しX7'), van.tags.p('本文。')])
+        van.add(document.body, van.tags.div(()=>van.tags.div(vanX.stateFields(htmls).val)))
+        htmls[0] = [van.tags.h1('書き換え！X7')]
+    }
+    testX7()
+
+    function testX8() {
+        const htmls = vanX.reactive([van.tags.h1('見出しX8'), van.tags.p('本文。')])
+        van.add(document.body, ()=>vanX.list(van.tags.div, htmls, (e)=>e))
+        htmls[0] = [van.tags.h1('書き換え！X8')]
+    }
+    testX8()
+
+
+    function testX9() {
+        const htmls = vanX.reactive([van.tags.h1('見出しX9'), van.tags.p('本文。')])
+        van.add(document.body, van.tags.div(()=>vanX.list(van.tags.div, htmls, (e)=>e)))
+        htmls[0] = [van.tags.h1('書き換え！X9')]
+    }
+    testX9()
+
+
+
+    function testX10() {
+        const htmls = vanX.reactive([van.tags.h1('見出しX10'), van.tags.p('本文。')])
+        van.add(document.body, vanX.list(van.tags.div, htmls, (e)=>e))
+        htmls[0] = [van.tags.h1('書き換え！X10')]
+    }
+    testX10()
+
+
+    function testX11() {
+        const htmls = vanX.reactive([van.tags.h1('見出しX11'), van.tags.p('本文。')])
+        //van.add(document.body, ()=>vanX.list(van.tags.div, htmls, (e)=>vanX.stateFields(e).val))
+        //van.add(document.body, ()=>vanX.list(van.tags.div, htmls, (e)=>e.val))
+        van.add(document.body, ()=>vanX.list(van.tags.div, htmls, (e)=>e))
+        htmls[0] = [van.tags.h1('書き換え！X11')]
+    }
+    testX11()
+
+    function testX12() {
+        const htmls = vanX.reactive([1,2,3])
+        //van.add(document.body, ()=>vanX.list(van.tags.div, htmls, (e)=>vanX.stateFields(e).val))
+        //van.add(document.body, ()=>vanX.list(van.tags.div, htmls, (e)=>e.val))
+        //van.add(document.body, ()=>vanX.list(van.tags.ul, htmls, (v)=>li(v)))
+        van.add(document.body, vanX.list(van.tags.ul, htmls, (v)=>van.tags.li(v)))
+        htmls[0] = [van.tags.h1('書き換え！X12')]
+    }
+    testX12()
+
+
+})
+</script>
+<body>
+    <div></div>
+</body>
+

@@ -1,0 +1,41 @@
+<script src="../lib/van/1.2.6/nomodule.min.js"></script>
+<script src="../lib/van-x/0.1.3/nomodule.min.js"></script>
+<script src="../lib/util/type.js"></script>
+<script src="../lib/util/css.js"></script>
+<script src="../lib/util/array/times.js"></script>
+<style>
+body {
+    padding:0;margin:0;
+    /*
+    overflow-x:hidden;
+    overflow-y:hidden;
+    width:var(--client-width);
+    height:var(--client-height);
+    */
+}
+</style>
+<script>
+window.addEventListener('DOMContentLoaded', (event) => {
+    window.clientSize = vanX.reactive({W:100, H:100})
+    van.add(document.body, 
+        //van.tags.div({style:()=>`padding:0;margin:0;width:${clientSize.W}px;height:${clientSize.H}px;overflow-x':hidden;`}, Array.times(50, (i)=>{console.log(i);return van.tags.p(String.fromCharCode(12353+i).repeat(200), i)})),
+        van.tags.div({style:()=>`padding:0;margin:0;overflow-x':hidden;`}, Array.times(50, (i)=>{console.log(i);return van.tags.p(String.fromCharCode(12353+i).repeat(200), i)})),
+        //Array.times(50, (i)=>{console.log(i);return van.tags.p(String.fromCharCode(12353+i).repeat(200), i)}),
+    )
+    window.dispatchEvent(new Event('resize'))
+})
+window.addEventListener('resize', (event) => {
+//    const W = document.body.clientWidth
+//    const H = document.documentElement.clientHeight
+    clientSize.W = document.body.clientWidth
+    clientSize.H = document.body.clientHeight
+    Css.set('--client-width', `${clientSize.W}px`)
+    Css.set('--client-height', `${clientSize.H}px`)
+    console.log(`W:${clientSize.W}, H:${clientSize.H}`)
+    console.log(document.body.clientHeight)
+})
+</script>
+<body>
+    <div></div>
+</body>
+

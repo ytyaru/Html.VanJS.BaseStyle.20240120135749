@@ -1,0 +1,37 @@
+<script src="../lib/van/1.2.6/nomodule.min.js"></script>
+<script src="../lib/util/type.js"></script>
+<script src="../lib/util/css.js"></script>
+<script src="../lib/util/array/times.js"></script>
+<style>
+body {
+    overflow-x:hidden;
+    overflow-y:hidden;
+    padding:0;margin:0;
+    width:var(--client-width);
+    height:var(--client-height);
+}
+</style>
+<script>
+window.addEventListener('DOMContentLoaded', (event) => {
+    //van.add(document.body, Array.times(50, (i)=>van.tags.p('あ'.repeat(80)))
+    //van.add(document.body, Array.times(50, (i)=>van.tags.p(String.fromCharCode((12354+i+((i<5) ? 1 : 0))).repeat(80))))
+    //van.add(document.body, Array.times(50, (i)=>{console.log(i);return van.tags.p(String.fromCharCode((12353+(i*((i<11) ? 2 : 1))+((i<6) ? 1 : 0))).repeat(200))}))
+    //van.add(document.body, Array.times(50, (i)=>{console.log(i);return van.tags.p(String.fromCharCode(12353+i).repeat(200), i)}))
+    van.add(document.body, 
+        //van.tags.div({style:()=>`width:var(--client-width);height:var(--client-height);overflow-x:scroll;overflow-y':scroll;`}, Array.times(50, (i)=>{console.log(i);return van.tags.p(String.fromCharCode(12353+i).repeat(200), i)})),
+        van.tags.div({style:()=>`width:100px;height:100px;overflow-x:scroll;overflow-y':scroll;`}, Array.times(50, (i)=>{console.log(i);return van.tags.p(String.fromCharCode(12353+i).repeat(200), i)})),
+    )
+    window.dispatchEvent(new Event('resize'))
+})
+window.addEventListener('resize', (event) => {
+    const W = document.body.clientWidth
+    const H = document.documentElement.clientHeight
+    Css.set('--client-width', `${W}px`)
+    Css.set('--client-height', `${H}px`)
+    console.log(`W:${W}, H:${H}`)
+})
+</script>
+<body>
+    <div></div>
+</body>
+

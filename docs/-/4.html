@@ -1,0 +1,47 @@
+<script src="../lib/van/1.2.6/nomodule.min.js"></script>
+<script src="../lib/van-x/0.1.3/nomodule.min.js"></script>
+<script src="../lib/util/type.js"></script>
+<script src="../lib/util/css.js"></script>
+<script src="../lib/util/array/times.js"></script>
+<style>
+body {
+    padding:0;margin:0;
+    box-sizing:border-box;
+    overflow-x:hidden;
+    overflow-y:hidden;
+}
+</style>
+<script>
+window.addEventListener('DOMContentLoaded', (event) => {
+    window.clientSize = vanX.reactive({W:100, H:100})
+    window.contents = vanX.reactive({left:getContents(), right:getContents()})
+    console.log(vanX.stateFields(contents))
+    console.log(vanX.stateFields(contents).left.val)
+    van.add(document.body, splitScreen())
+    function getContents() { return Array.times(50, (i)=>van.tags.p(String.fromCharCode(12353+i).repeat(200), i)) }
+    function splitScreen() {
+        return van.tags.div({class:'split-screen', style:()=>`padding:0;margin:0;box-sizing:border-box;display:grid;grid-template-columns:repeat(2, minmax(${Math.floor(clientSize.W/2)}px, 1fr));grid-template-rows:${Math.floor(clientSize.H)}px`},
+            van.tags.div({class:'left', style:()=>`padding:0;margin:0;box-sizing:border-box;border:solid 1px #000;overflow-y:auto;width:${Math.floor(clientSize.W/2)}px;height:${clientSize.H}px;`,}, ()=>van.tags.div(contents.left)),
+
+            van.tags.div({class:'right', style:()=>`padding:0;margin:0;box-sizing:border-box;border:solid 1px #000;overflow-y:auto;width:${Math.floor(clientSize.W/2)}px;height:${clientSize.H}px;`}, van.tags.div(()=>van.tags.div(vanX.stateFields(contents).right.val))),
+            //van.tags.div({class:'right', style:()=>`padding:0;margin:0;box-sizing:border-box;border:solid 1px #000;overflow-y:auto;width:${Math.floor(clientSize.W/2)}px;height:${clientSize.H}px;`}, vanX.list(van.tags.div, contents.right, e=>e)),
+            //van.tags.div({class:'right', style:()=>`padding:0;margin:0;box-sizing:border-box;border:solid 1px #000;overflow-y:auto;width:${Math.floor(clientSize.W/2)}px;height:${clientSize.H}px;`}, vanX.list(van.tags.div, contents.right, e=>e)),
+//            van.tags.div({class:'left', style:()=>`padding:0;margin:0;box-sizing:border-box;border:solid 1px #000;overflow-y:auto;width:${Math.floor(clientSize.W/2)}px;height:${clientSize.H}px;`,}, getContents()),
+//            van.tags.div({class:'right', style:()=>`padding:0;margin:0;box-sizing:border-box;border:solid 1px #000;overflow-y:auto;width:${Math.floor(clientSize.W/2)}px;height:${clientSize.H}px;`}, getContents()),
+        )
+    }
+    window.dispatchEvent(new Event('resize'))
+})
+window.addEventListener('resize', (event) => {
+    clientSize.W = document.body.clientWidth
+    clientSize.H = document.body.clientHeight
+    Css.set('--client-width', `${clientSize.W}px`)
+    Css.set('--client-height', `${clientSize.H}px`)
+    console.log(`W:${clientSize.W}, H:${clientSize.H}`)
+    console.log(document.body.clientHeight)
+})
+</script>
+<body>
+    <div></div>
+</body>
+
