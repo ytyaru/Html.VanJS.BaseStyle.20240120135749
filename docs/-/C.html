@@ -54,16 +54,28 @@ class SplitScreen {
         this._left = new FitScreen()
         this._right = new FitScreen()
         this._h = van.state(document.body.clientHeight)
-        //this._div = van.tags.div({style:()=>`padding:0;margin:0;box-sizing:border-box;display:grid;grid-template-columns:50% 50%;grid-template-rows:100%;`}, this._left.el, this._right.el)
         this._div = van.tags.div({style:()=>`padding:0;margin:0;box-sizing:border-box;display:grid;grid-template-columns:50% 50%;grid-template-rows:${this._h.val}px;`}, this._left.el, this._right.el)
     }
     get el() { return this._div }
     get left() { return this._left }
     get right() { return this._right }
-    //resize() { this._h.val = document.body.clientHeight }
-    //resize() { this._h.val = document.body.clientHeight; console.log('height:',this._h.val); }
     resize() { this._h.val = Math.floor(document.body.clientHeight); console.log('height:',this._h.val); }
 }
+class MenuSplitScreen {
+    constructor() {
+        this._left = new FitScreen()
+        this._right = new FitScreen()
+        this._center = new FitScreen()
+        this._h = van.state(document.body.clientHeight)
+        this._div = van.tags.div({style:()=>`padding:0;margin:0;box-sizing:border-box;display:grid;grid-template-columns:48% 4% 48%;grid-template-rows:${this._h.val}px;`}, this._left.el, this._center.el, this._right.el)
+    }
+    get el() { return this._div }
+    get left() { return this._left }
+    get right() { return this._right }
+    get center() { return this._center }
+    resize() { this._h.val = Math.floor(document.body.clientHeight); console.log('height:',this._h.val); }
+}
+
 window.addEventListener('DOMContentLoaded', (event) => {
     /*
     // bodyに要素が追加されたらリサイズする
@@ -72,8 +84,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
         window.fitScreen2.resize()
     }).observe(document.body, {childList:true})
     */
-    window.splitScreen = new SplitScreen() 
-    window.splitScreen.left.children = [
+    window.splitScreen = new MenuSplitScreen() 
+    window.splitScreen.center.children = [
         button({onclick:()=>window.splitScreen.right.children[1] = '既存配列要素の値を変更する'}, 'change'),
         button({onclick:()=>window.splitScreen.right.children.push(p('既存配列に要素を追加する'))}, 'push'),
         button({onclick:()=>window.splitScreen.right.children = [h1('新配列を代入する'), p('配列まるごと更新！')]}, 'new Array'),
