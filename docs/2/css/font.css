@@ -1,0 +1,12 @@
+@charset "utf-8";
+:root {
+    --font-size:max(16px, calc(100vw / 42));
+}
+body, textarea, button, input {
+    font-family: 'Noto Serif JP', 'Source Han Serif JP', 'Noto Color Emoji', serif; 
+    font-size: var(--font-size);
+    line-height: 1.7em;
+    letter-spacing: 0.05em;
+}
+button { user-select:none; font-size:var(--font-size); padding:0; margin:0; line-height:1em; letter-spacing:0; word-break:break-word; }
+

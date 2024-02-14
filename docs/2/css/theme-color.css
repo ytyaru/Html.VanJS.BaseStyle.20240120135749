@@ -1,0 +1,55 @@
+@charset "utf-8";
+:root {
+    --em-style:filled sesame;
+    --em-color:#fff;
+    --color:#fff;
+    --a-color:#ff0;
+    --background-color:#000;
+    --selection-color:#000;
+    --selection-background-color:#aa0;
+    --a-selection-color:#ee0;
+    --a-selection-background-color:#00f;
+    --caret-color: auto;
+    --outline-color:#fff;
+    --outline-style:solid;
+    --outline-width:2px;
+    --button-focus-color:#000;
+    --button-focus-background-color:#aa0;
+    --th-color:#000;
+    --th-background-color:#220;
+}
+*:focus {
+    outline-color: var(--outline-color);
+    outline-style: var(--outline-style);
+    outline-width: var(--outline-width);
+}
+button:focus {
+    color: var(--button-focus-color);
+    background-color: var(--button-focus-background-color);
+}
+body, textarea, button, input {
+    color: var(--color);
+    background-color: var(--background-color);
+    caret-color: var(--caret-color);
+}
+::selection {
+    color: var(--selection-color);
+    background-color: var(--selection-background-color);
+    text-shadow: none;
+}
+a::selection {
+    color: var(--a-selection-color);
+    background-color: var(--a-selection-background-color);
+    text-shadow: none;
+}
+h1,h2,h3,h4,h5,h6,th,label,caption,legend { font-family: 'Noto Sans JP', 'Source Han Sans JP', 'Noto Color Emoji', sans-serif; }
+em {
+    font-style: normal; /* 非イタリック化 */
+    text-emphasis: var(--em-style) var(--em-color);
+    -webkit-text-emphasis: var(--em-style) var(--em-color);
+}
+a:link, a:visited, a:hover, a:active { color: var(--a-color); }
+th {
+    color: var(--th-color);
+    background-color: var(--th-background-color);
+}
